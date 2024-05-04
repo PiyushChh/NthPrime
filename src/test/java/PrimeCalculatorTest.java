@@ -1,43 +1,53 @@
+import org.assertj.core.api.ThrowableAssert;
+import org.junit.jupiter.api.Test;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-
 public class PrimeCalculatorTest {
-
-    private PrimeCalculator primeCalculator = new PrimeCalculator();
+    private final PrimeCalculator primeCalculator = new PrimeCalculator();
 
     @Test
     public void testFirstPrime() {
-        assertThat(primeCalculator.nth(1)).isEqualTo(2);
-    }
+        int  expected = 2;
 
+        int actual = primeCalculator.nth(1);
+
+        assertThat(actual).isEqualTo( expected);
+    }
 
     @Test
     public void testSecondPrime() {
-        assertThat(primeCalculator.nth(2)).isEqualTo(3);
-    }
+        int expected = 3;
 
+        int actual = primeCalculator.nth(2);
+
+        assertThat(actual).isEqualTo(expected);
+    }
 
     @Test
     public void testSixthPrime() {
         assertThat(primeCalculator.nth(6)).isEqualTo(13);
     }
 
-
     @Test
     public void testBigPrime() {
-        assertThat(primeCalculator.nth(10001)).isEqualTo(104743);
-    }
 
+        int expected = 104743;
+
+        int actual = primeCalculator.nth(10001);
+
+        assertThat(actual).isEqualTo(expected);
+    }
 
     @Test
     public void testUndefinedPrime() {
-        assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> primeCalculator.nth(0));
-    }
+        Class<IllegalArgumentException> expectedException = IllegalArgumentException.class;
 
+        ThrowableAssert.ThrowingCallable actualException = () -> primeCalculator.nth(0);
+
+        assertThatExceptionOfType(expectedException)
+                .isThrownBy(actualException);
+    }
 }
 
